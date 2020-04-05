@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import git
 import shutil
 import pathlib
 import requests
 import datetime
 
+base = pathlib.Path(__file__).parent.parent.absolute()
 url = 'https://covid-19-threat-list.domaintools.com/dt-covid-19-threat-list.csv.gz'
 
 def download(path):
@@ -15,9 +17,12 @@ def download(path):
 
 def main():
     date = datetime.date.today()
-    cwd = pathlib.Path(__file__).parent.absolute()
-    path = (cwd / "data" / "dnstools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
+    path = (base / "data" / "dnstools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
     download(path)
+    repo = git.Repo(base)
+    repo.index.add([path.as_posix()])
+    repo.index.commit("Added latest DomainTools file {}".format(path))
+    repo.remotes.origin.push()
 
 if __name__ == "__main__":
     main()
