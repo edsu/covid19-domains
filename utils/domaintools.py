@@ -17,7 +17,7 @@ def download(path):
 
 def main():
     date = datetime.date.today()
-    path = (base / "data" / "dnstools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
+    path = (base / "data" / "domaintools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
     download(path)
     repo = git.Repo(base)
     repo.index.add([path.as_posix()])
