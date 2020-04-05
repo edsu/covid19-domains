@@ -20,8 +20,9 @@ def main():
     path = (base / "data" / "domaintools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
     download(path)
     repo = git.Repo(base)
-    repo.index.add([path.as_posix()])
-    repo.index.commit("Added latest DomainTools file {}".format(path))
+    repo.git.pull()
+    repo.git.add([path.as_posix()])
+    repo.git.commit("Added latest DomainTools file {}".format(path))
     repo.remotes.origin.push()
 
 if __name__ == "__main__":
