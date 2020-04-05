@@ -9,5 +9,3 @@ verify_ssl = true
 requests = "*"
 gitpython = "*"
 
-[requires]
-python_version = "3.6"
