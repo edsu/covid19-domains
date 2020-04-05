@@ -4,7 +4,6 @@ Experiments related to COVID-19 domain blacklists.
 
 ## Setup
 
-
     git clone https://github.com/edsu/covid19-blacklists.git
     cd covid19-blacklists
     pipenv install
