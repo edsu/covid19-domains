@@ -21,8 +21,8 @@ def main():
     download(path)
     repo = git.Repo(base)
     repo.git.pull()
-    repo.git.add([path.as_posix()])
-    repo.git.commit("Added latest DomainTools file {}".format(path))
+    repo.index.add([path.as_posix()])
+    repo.index.commit("Added latest DomainTools file {}".format(path))
     repo.remotes.origin.push()
 
 if __name__ == "__main__":
