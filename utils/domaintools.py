@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import git
+import os
+import boto3
 import shutil
 import pathlib
 import requests
@@ -17,13 +18,12 @@ def download(path):
 
 def main():
     date = datetime.date.today()
-    path = (base / "data" / "domaintools" / date.strftime('%Y-%m-%d')).with_suffix('.csv.gz')
+    path = date.strftime('%Y-%m-%d') + '.csv.gz'
     download(path)
-    repo = git.Repo(base)
-    repo.git.pull()
-    repo.index.add([path.as_posix()])
-    repo.index.commit("Added latest DomainTools file {}".format(path))
-    repo.remotes.origin.push()
+    
+    s3 = boto3.client('s3')
+    s3.upload_file(path, 'edsu-covid19-domains', 'domaintools/{}'.format(path))
+    os.remove(path)
 
 if __name__ == "__main__":
     main()
